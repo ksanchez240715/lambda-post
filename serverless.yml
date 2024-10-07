@@ -1,0 +1,39 @@
+service: lambda-post
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  apiDocs:
+    handler: swaggerHandler.apiDocs
+    events:
+      - http:
+          path: api-docs
+          method: get
+
+  swaggerUiHandler:
+    handler: swaggerHandler.swaggerUiHandler
+    events:
+      - http:
+          path: api-doc
+          method: get
+  postSpecie:
+    handler: src/handlers/SpecieHandler.postSpecieCreate
+    events:
+      - http:
+          path: specie
+          method: POST
+          cors: true
+  postVehicle:
+    handler: src/handlers/VehicleHandler.postVehicleCreate
+    events:
+      - http:
+          path: vehicle
+          method: POST
+          cors: true
+
+plugins:
+  - serverless-offline

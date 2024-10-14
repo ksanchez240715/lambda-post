@@ -1,7 +1,7 @@
 {
-  "C:\\DEV\\NodeJS\\BackendNodeJSAWS\\lambda-post": {
+  "C:\\DEV\\NodeJS\\BackendNodeJSAWS\\lambda-post-softtek": {
     "versionSfCore": null,
-    "versionFramework": "4.4.4",
+    "versionFramework": "4.4.6",
     "isWithinCompose": false,
     "isCompose": false,
     "composeOrgName": null,
@@ -9,7 +9,7 @@
       "default-aws-credential-resolver": "<REDACTED>"
     },
     "composeServiceName": null,
-    "servicePath": "C:\\DEV\\NodeJS\\BackendNodeJSAWS\\lambda-post",
+    "servicePath": "C:\\DEV\\NodeJS\\BackendNodeJSAWS\\lambda-post-softtek",
     "serviceConfigFileName": "serverless.yml",
     "service": {
       "service": "lambda-post",
@@ -23,28 +23,10 @@
           "AWSTemplateFormatVersion": "2010-09-09",
           "Description": "The AWS CloudFormation template for this Serverless application",
           "Resources": {
-            "ApiDocsLogGroup": {
+            "ApiHandlerLogGroup": {
               "Type": "AWS::Logs::LogGroup",
               "Properties": {
-                "LogGroupName": "/aws/lambda/lambda-post-dev-apiDocs"
-              }
-            },
-            "SwaggerUiHandlerLogGroup": {
-              "Type": "AWS::Logs::LogGroup",
-              "Properties": {
-                "LogGroupName": "/aws/lambda/lambda-post-dev-swaggerUiHandler"
-              }
-            },
-            "PostSpecieLogGroup": {
-              "Type": "AWS::Logs::LogGroup",
-              "Properties": {
-                "LogGroupName": "/aws/lambda/lambda-post-dev-postSpecie"
-              }
-            },
-            "PostVehicleLogGroup": {
-              "Type": "AWS::Logs::LogGroup",
-              "Properties": {
-                "LogGroupName": "/aws/lambda/lambda-post-dev-postVehicle"
+                "LogGroupName": "/aws/lambda/lambda-post-dev-apiHandler"
               }
             },
             "IamRoleLambdaExecution": {
@@ -125,16 +107,16 @@
                 }
               }
             },
-            "ApiDocsLambdaFunction": {
+            "ApiHandlerLambdaFunction": {
               "Type": "AWS::Lambda::Function",
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-us-east-1-25f59da2-0c72",
-                  "S3Key": "serverless/lambda-post/dev/1728304090829-2024-10-07T12:28:10.829Z/lambda-post.zip"
+                  "S3Key": "serverless/lambda-post/dev/1728943337877-2024-10-14T22:02:17.877Z/lambda-post.zip"
                 },
-                "Handler": "swaggerHandler.apiDocs",
+                "Handler": "handler.api",
                 "Runtime": "nodejs18.x",
-                "FunctionName": "lambda-post-dev-apiDocs",
+                "FunctionName": "lambda-post-dev-apiHandler",
                 "MemorySize": 1024,
                 "Timeout": 6,
                 "Environment": {
@@ -150,131 +132,17 @@
                 }
               },
               "DependsOn": [
-                "ApiDocsLogGroup"
+                "ApiHandlerLogGroup"
               ]
             },
-            "SwaggerUiHandlerLambdaFunction": {
-              "Type": "AWS::Lambda::Function",
-              "Properties": {
-                "Code": {
-                  "S3Bucket": "serverless-framework-deployments-us-east-1-25f59da2-0c72",
-                  "S3Key": "serverless/lambda-post/dev/1728304090829-2024-10-07T12:28:10.829Z/lambda-post.zip"
-                },
-                "Handler": "swaggerHandler.swaggerUiHandler",
-                "Runtime": "nodejs18.x",
-                "FunctionName": "lambda-post-dev-swaggerUiHandler",
-                "MemorySize": 1024,
-                "Timeout": 6,
-                "Environment": {
-                  "Variables": {
-                    "NODE_OPTIONS": "--enable-source-maps"
-                  }
-                },
-                "Role": {
-                  "Fn::GetAtt": [
-                    "IamRoleLambdaExecution",
-                    "Arn"
-                  ]
-                }
-              },
-              "DependsOn": [
-                "SwaggerUiHandlerLogGroup"
-              ]
-            },
-            "PostSpecieLambdaFunction": {
-              "Type": "AWS::Lambda::Function",
-              "Properties": {
-                "Code": {
-                  "S3Bucket": "serverless-framework-deployments-us-east-1-25f59da2-0c72",
-                  "S3Key": "serverless/lambda-post/dev/1728304090829-2024-10-07T12:28:10.829Z/lambda-post.zip"
-                },
-                "Handler": "src/handlers/SpecieHandler.postSpecieCreate",
-                "Runtime": "nodejs18.x",
-                "FunctionName": "lambda-post-dev-postSpecie",
-                "MemorySize": 1024,
-                "Timeout": 6,
-                "Environment": {
-                  "Variables": {
-                    "NODE_OPTIONS": "--enable-source-maps"
-                  }
-                },
-                "Role": {
-                  "Fn::GetAtt": [
-                    "IamRoleLambdaExecution",
-                    "Arn"
-                  ]
-                }
-              },
-              "DependsOn": [
-                "PostSpecieLogGroup"
-              ]
-            },
-            "PostVehicleLambdaFunction": {
-              "Type": "AWS::Lambda::Function",
-              "Properties": {
-                "Code": {
-                  "S3Bucket": "serverless-framework-deployments-us-east-1-25f59da2-0c72",
-                  "S3Key": "serverless/lambda-post/dev/1728304090829-2024-10-07T12:28:10.829Z/lambda-post.zip"
-                },
-                "Handler": "src/handlers/VehicleHandler.postVehicleCreate",
-                "Runtime": "nodejs18.x",
-                "FunctionName": "lambda-post-dev-postVehicle",
-                "MemorySize": 1024,
-                "Timeout": 6,
-                "Environment": {
-                  "Variables": {
-                    "NODE_OPTIONS": "--enable-source-maps"
-                  }
-                },
-                "Role": {
-                  "Fn::GetAtt": [
-                    "IamRoleLambdaExecution",
-                    "Arn"
-                  ]
-                }
-              },
-              "DependsOn": [
-                "PostVehicleLogGroup"
-              ]
-            },
-            "ApiDocsLambdaVersion0iQtpnS0VxlpMYu5qpPAaQDS8tUwtNS64LwnHavrw": {
+            "ApiHandlerLambdaVersionpngtdGWWbfhhRuQJ6RZiBVK5VPOxvs5rNJB1fxzms": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
-                  "Ref": "ApiDocsLambdaFunction"
+                  "Ref": "ApiHandlerLambdaFunction"
                 },
-                "CodeSha256": "Xo6e/TVZ/M7F7Jh9ezHKpDGHdLkfAefb+q4Us4UAwvY="
-              }
-            },
-            "SwaggerUiHandlerLambdaVersionFyP72tvaGbPe7x4L1LwjHqfh7ukC8K8RH2yA0n1E8": {
-              "Type": "AWS::Lambda::Version",
-              "DeletionPolicy": "Retain",
-              "Properties": {
-                "FunctionName": {
-                  "Ref": "SwaggerUiHandlerLambdaFunction"
-                },
-                "CodeSha256": "Xo6e/TVZ/M7F7Jh9ezHKpDGHdLkfAefb+q4Us4UAwvY="
-              }
-            },
-            "PostSpecieLambdaVersion4m89I9MKCdgZRFDrdkHeiI3EXgU8jpH5RzmIWcWCwWo": {
-              "Type": "AWS::Lambda::Version",
-              "DeletionPolicy": "Retain",
-              "Properties": {
-                "FunctionName": {
-                  "Ref": "PostSpecieLambdaFunction"
-                },
-                "CodeSha256": "Xo6e/TVZ/M7F7Jh9ezHKpDGHdLkfAefb+q4Us4UAwvY="
-              }
-            },
-            "PostVehicleLambdaVersiony5pdZfH4aw5rYqYGfv8mLYy8X3CBv208XFciMo88Q": {
-              "Type": "AWS::Lambda::Version",
-              "DeletionPolicy": "Retain",
-              "Properties": {
-                "FunctionName": {
-                  "Ref": "PostVehicleLambdaFunction"
-                },
-                "CodeSha256": "Xo6e/TVZ/M7F7Jh9ezHKpDGHdLkfAefb+q4Us4UAwvY="
+                "CodeSha256": "aDtYNg9mMMVfR+7sPYsBGS+MAf7uj4ceSPDZV5A6tgQ="
               }
             },
             "ApiGatewayRestApi": {
@@ -287,36 +155,6 @@
                   ]
                 },
                 "Policy": ""
-              }
-            },
-            "ApiGatewayResourceApiDashdocs": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Fn::GetAtt": [
-                    "ApiGatewayRestApi",
-                    "RootResourceId"
-                  ]
-                },
-                "PathPart": "api-docs",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
-              }
-            },
-            "ApiGatewayResourceApiDashdoc": {
-              "Type": "AWS::ApiGateway::Resource",
-              "Properties": {
-                "ParentId": {
-                  "Fn::GetAtt": [
-                    "ApiGatewayRestApi",
-                    "RootResourceId"
-                  ]
-                },
-                "PathPart": "api-doc",
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                }
               }
             },
             "ApiGatewayResourceSpecie": {
@@ -439,98 +277,6 @@
                 }
               }
             },
-            "ApiGatewayMethodApiDashdocsGet": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "HttpMethod": "GET",
-                "RequestParameters": {},
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiDashdocs"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                },
-                "ApiKeyRequired": "<REDACTED>",
-                "AuthorizationType": "NONE",
-                "Integration": {
-                  "IntegrationHttpMethod": "POST",
-                  "Type": "AWS_PROXY",
-                  "Uri": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition"
-                        },
-                        ":apigateway:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":lambda:path/2015-03-31/functions/",
-                        {
-                          "Fn::GetAtt": [
-                            "ApiDocsLambdaFunction",
-                            "Arn"
-                          ]
-                        },
-                        "/invocations"
-                      ]
-                    ]
-                  }
-                },
-                "MethodResponses": []
-              },
-              "DependsOn": [
-                "ApiDocsLambdaPermissionApiGateway"
-              ]
-            },
-            "ApiGatewayMethodApiDashdocGet": {
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "HttpMethod": "GET",
-                "RequestParameters": {},
-                "ResourceId": {
-                  "Ref": "ApiGatewayResourceApiDashdoc"
-                },
-                "RestApiId": {
-                  "Ref": "ApiGatewayRestApi"
-                },
-                "ApiKeyRequired": "<REDACTED>",
-                "AuthorizationType": "NONE",
-                "Integration": {
-                  "IntegrationHttpMethod": "POST",
-                  "Type": "AWS_PROXY",
-                  "Uri": {
-                    "Fn::Join": [
-                      "",
-                      [
-                        "arn:",
-                        {
-                          "Ref": "AWS::Partition"
-                        },
-                        ":apigateway:",
-                        {
-                          "Ref": "AWS::Region"
-                        },
-                        ":lambda:path/2015-03-31/functions/",
-                        {
-                          "Fn::GetAtt": [
-                            "SwaggerUiHandlerLambdaFunction",
-                            "Arn"
-                          ]
-                        },
-                        "/invocations"
-                      ]
-                    ]
-                  }
-                },
-                "MethodResponses": []
-              },
-              "DependsOn": [
-                "SwaggerUiHandlerLambdaPermissionApiGateway"
-              ]
-            },
             "ApiGatewayMethodSpeciePost": {
               "Type": "AWS::ApiGateway::Method",
               "Properties": {
@@ -562,7 +308,7 @@
                         ":lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "PostSpecieLambdaFunction",
+                            "ApiHandlerLambdaFunction",
                             "Arn"
                           ]
                         },
@@ -574,7 +320,7 @@
                 "MethodResponses": []
               },
               "DependsOn": [
-                "PostSpecieLambdaPermissionApiGateway"
+                "ApiHandlerLambdaPermissionApiGateway"
               ]
             },
             "ApiGatewayMethodVehiclePost": {
@@ -608,7 +354,7 @@
                         ":lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "PostVehicleLambdaFunction",
+                            "ApiHandlerLambdaFunction",
                             "Arn"
                           ]
                         },
@@ -620,10 +366,10 @@
                 "MethodResponses": []
               },
               "DependsOn": [
-                "PostVehicleLambdaPermissionApiGateway"
+                "ApiHandlerLambdaPermissionApiGateway"
               ]
             },
-            "ApiGatewayDeployment1728304086952": {
+            "ApiGatewayDeployment1728943333671": {
               "Type": "AWS::ApiGateway::Deployment",
               "Properties": {
                 "RestApiId": {
@@ -634,129 +380,16 @@
               "DependsOn": [
                 "ApiGatewayMethodSpecieOptions",
                 "ApiGatewayMethodVehicleOptions",
-                "ApiGatewayMethodApiDashdocsGet",
-                "ApiGatewayMethodApiDashdocGet",
                 "ApiGatewayMethodSpeciePost",
                 "ApiGatewayMethodVehiclePost"
               ]
             },
-            "ApiDocsLambdaPermissionApiGateway": {
+            "ApiHandlerLambdaPermissionApiGateway": {
               "Type": "AWS::Lambda::Permission",
               "Properties": {
                 "FunctionName": {
                   "Fn::GetAtt": [
-                    "ApiDocsLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "Action": "lambda:InvokeFunction",
-                "Principal": "apigateway.amazonaws.com",
-                "SourceArn": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":execute-api:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":",
-                      {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "/*/*"
-                    ]
-                  ]
-                }
-              }
-            },
-            "SwaggerUiHandlerLambdaPermissionApiGateway": {
-              "Type": "AWS::Lambda::Permission",
-              "Properties": {
-                "FunctionName": {
-                  "Fn::GetAtt": [
-                    "SwaggerUiHandlerLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "Action": "lambda:InvokeFunction",
-                "Principal": "apigateway.amazonaws.com",
-                "SourceArn": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":execute-api:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":",
-                      {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "/*/*"
-                    ]
-                  ]
-                }
-              }
-            },
-            "PostSpecieLambdaPermissionApiGateway": {
-              "Type": "AWS::Lambda::Permission",
-              "Properties": {
-                "FunctionName": {
-                  "Fn::GetAtt": [
-                    "PostSpecieLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "Action": "lambda:InvokeFunction",
-                "Principal": "apigateway.amazonaws.com",
-                "SourceArn": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":execute-api:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":",
-                      {
-                        "Ref": "ApiGatewayRestApi"
-                      },
-                      "/*/*"
-                    ]
-                  ]
-                }
-              }
-            },
-            "PostVehicleLambdaPermissionApiGateway": {
-              "Type": "AWS::Lambda::Permission",
-              "Properties": {
-                "FunctionName": {
-                  "Fn::GetAtt": [
-                    "PostVehicleLambdaFunction",
+                    "ApiHandlerLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -796,40 +429,13 @@
                 "Name": "sls-lambda-post-dev-ServerlessDeploymentBucketName"
               }
             },
-            "ApiDocsLambdaFunctionQualifiedArn": {
+            "ApiHandlerLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "ApiDocsLambdaVersion0iQtpnS0VxlpMYu5qpPAaQDS8tUwtNS64LwnHavrw"
+                "Ref": "ApiHandlerLambdaVersionpngtdGWWbfhhRuQJ6RZiBVK5VPOxvs5rNJB1fxzms"
               },
               "Export": {
-                "Name": "sls-lambda-post-dev-ApiDocsLambdaFunctionQualifiedArn"
-              }
-            },
-            "SwaggerUiHandlerLambdaFunctionQualifiedArn": {
-              "Description": "Current Lambda function version",
-              "Value": {
-                "Ref": "SwaggerUiHandlerLambdaVersionFyP72tvaGbPe7x4L1LwjHqfh7ukC8K8RH2yA0n1E8"
-              },
-              "Export": {
-                "Name": "sls-lambda-post-dev-SwaggerUiHandlerLambdaFunctionQualifiedArn"
-              }
-            },
-            "PostSpecieLambdaFunctionQualifiedArn": {
-              "Description": "Current Lambda function version",
-              "Value": {
-                "Ref": "PostSpecieLambdaVersion4m89I9MKCdgZRFDrdkHeiI3EXgU8jpH5RzmIWcWCwWo"
-              },
-              "Export": {
-                "Name": "sls-lambda-post-dev-PostSpecieLambdaFunctionQualifiedArn"
-              }
-            },
-            "PostVehicleLambdaFunctionQualifiedArn": {
-              "Description": "Current Lambda function version",
-              "Value": {
-                "Ref": "PostVehicleLambdaVersiony5pdZfH4aw5rYqYGfv8mLYy8X3CBv208XFciMo88Q"
-              },
-              "Export": {
-                "Name": "sls-lambda-post-dev-PostVehicleLambdaFunctionQualifiedArn"
+                "Name": "sls-lambda-post-dev-ApiHandlerLambdaFunctionQualifiedArn"
               }
             },
             "ServiceEndpoint": {
@@ -862,53 +468,12 @@
         },
         "vpc": {}
       },
+      "plugins": [
+        "serverless-offline"
+      ],
       "functions": {
-        "apiDocs": {
-          "handler": "swaggerHandler.apiDocs",
-          "events": [
-            {
-              "http": {
-                "path": "api-docs",
-                "method": "get",
-                "integration": "AWS_PROXY"
-              }
-            }
-          ],
-          "name": "lambda-post-dev-apiDocs",
-          "environment": {
-            "NODE_OPTIONS": "--enable-source-maps"
-          },
-          "package": {},
-          "memory": 1024,
-          "timeout": 6,
-          "runtime": "nodejs18.x",
-          "vpc": {},
-          "versionLogicalId": "ApiDocsLambdaVersion0iQtpnS0VxlpMYu5qpPAaQDS8tUwtNS64LwnHavrw"
-        },
-        "swaggerUiHandler": {
-          "handler": "swaggerHandler.swaggerUiHandler",
-          "events": [
-            {
-              "http": {
-                "path": "api-doc",
-                "method": "get",
-                "integration": "AWS_PROXY"
-              }
-            }
-          ],
-          "name": "lambda-post-dev-swaggerUiHandler",
-          "environment": {
-            "NODE_OPTIONS": "--enable-source-maps"
-          },
-          "package": {},
-          "memory": 1024,
-          "timeout": 6,
-          "runtime": "nodejs18.x",
-          "vpc": {},
-          "versionLogicalId": "SwaggerUiHandlerLambdaVersionFyP72tvaGbPe7x4L1LwjHqfh7ukC8K8RH2yA0n1E8"
-        },
-        "postSpecie": {
-          "handler": "src/handlers/SpecieHandler.postSpecieCreate",
+        "apiHandler": {
+          "handler": "handler.api",
           "events": [
             {
               "http": {
@@ -933,22 +498,7 @@
                 },
                 "integration": "AWS_PROXY"
               }
-            }
-          ],
-          "name": "lambda-post-dev-postSpecie",
-          "environment": {
-            "NODE_OPTIONS": "--enable-source-maps"
-          },
-          "package": {},
-          "memory": 1024,
-          "timeout": 6,
-          "runtime": "nodejs18.x",
-          "vpc": {},
-          "versionLogicalId": "PostSpecieLambdaVersion4m89I9MKCdgZRFDrdkHeiI3EXgU8jpH5RzmIWcWCwWo"
-        },
-        "postVehicle": {
-          "handler": "src/handlers/VehicleHandler.postVehicleCreate",
-          "events": [
+            },
             {
               "http": {
                 "path": "vehicle",
@@ -974,7 +524,7 @@
               }
             }
           ],
-          "name": "lambda-post-dev-postVehicle",
+          "name": "lambda-post-dev-apiHandler",
           "environment": {
             "NODE_OPTIONS": "--enable-source-maps"
           },
@@ -983,21 +533,18 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "PostVehicleLambdaVersiony5pdZfH4aw5rYqYGfv8mLYy8X3CBv208XFciMo88Q"
+          "versionLogicalId": "ApiHandlerLambdaVersionpngtdGWWbfhhRuQJ6RZiBVK5VPOxvs5rNJB1fxzms"
         }
-      },
-      "plugins": [
-        "serverless-offline"
-      ]
+      }
     },
-    "serviceRawFile": "service: lambda-post\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  stage: dev\r\n  region: us-east-1\r\n\r\nfunctions:\r\n  apiDocs:\r\n    handler: swaggerHandler.apiDocs\r\n    events:\r\n      - http:\r\n          path: api-docs\r\n          method: get\r\n\r\n  swaggerUiHandler:\r\n    handler: swaggerHandler.swaggerUiHandler\r\n    events:\r\n      - http:\r\n          path: api-doc\r\n          method: get\r\n  postSpecie:\r\n    handler: src/handlers/SpecieHandler.postSpecieCreate\r\n    events:\r\n      - http:\r\n          path: specie\r\n          method: POST\r\n          cors: true\r\n  postVehicle:\r\n    handler: src/handlers/VehicleHandler.postVehicleCreate\r\n    events:\r\n      - http:\r\n          path: vehicle\r\n          method: POST\r\n          cors: true\r\n\r\nplugins:\r\n  - serverless-offline\r\n",
+    "serviceRawFile": "service: lambda-post\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  stage: dev\r\n  region: us-east-1\r\n\r\nplugins:\r\n  - serverless-offline\r\n\r\nfunctions:\r\n  apiHandler:\r\n    handler: handler.api\r\n    events:\r\n      - http:\r\n          path: specie\r\n          method: POST\r\n          cors: true\r\n      - http:\r\n          path: vehicle\r\n          method: POST\r\n          cors: true\r\n\r\n",
     "command": [
       "deploy"
     ],
     "options": {},
     "error": null,
     "params": {},
-    "machineId": "3de23c3f15a6a92d40849857d6a712de",
+    "machineId": "669306d13eb75a0b6b402b3e1eb354ec",
     "stage": "dev",
     "accessKeyV2": "<REDACTED>",
     "accessKeyV1": "<REDACTED>",
@@ -1020,38 +567,20 @@
     "serviceProviderAwsCredentials": "<REDACTED>",
     "serviceProviderAwsAccountId": "430118854729",
     "projectType": "traditional",
-    "versionSf": "4.4.4",
+    "versionSf": "4.4.6",
     "serviceProviderAwsCfStackName": "lambda-post-dev",
     "integrations": {},
     "serviceUniqueId": "arn:aws:cloudformation:us-east-1:430118854729:stack/lambda-post-dev/1bea8160-849d-11ef-80a4-0afff1e6c27f",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:430118854729:stack/lambda-post-dev/1bea8160-849d-11ef-80a4-0afff1e6c27f",
     "serviceProviderAwsCfStackCreated": "2024-10-07T11:12:58.611Z",
-    "serviceProviderAwsCfStackUpdated": "2024-10-07T12:28:17.986Z",
+    "serviceProviderAwsCfStackUpdated": "2024-10-14T22:02:24.290Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
-        "OutputKey": "ApiDocsLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:430118854729:function:lambda-post-dev-apiDocs:1",
+        "OutputKey": "ApiHandlerLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:430118854729:function:lambda-post-dev-apiHandler:1",
         "Description": "Current Lambda function version",
-        "ExportName": "sls-lambda-post-dev-ApiDocsLambdaFunctionQualifiedArn"
-      },
-      {
-        "OutputKey": "PostSpecieLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:430118854729:function:lambda-post-dev-postSpecie:4",
-        "Description": "Current Lambda function version",
-        "ExportName": "sls-lambda-post-dev-PostSpecieLambdaFunctionQualifiedArn"
-      },
-      {
-        "OutputKey": "PostVehicleLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:430118854729:function:lambda-post-dev-postVehicle:4",
-        "Description": "Current Lambda function version",
-        "ExportName": "sls-lambda-post-dev-PostVehicleLambdaFunctionQualifiedArn"
-      },
-      {
-        "OutputKey": "SwaggerUiHandlerLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:430118854729:function:lambda-post-dev-swaggerUiHandler:1",
-        "Description": "Current Lambda function version",
-        "ExportName": "sls-lambda-post-dev-SwaggerUiHandlerLambdaFunctionQualifiedArn"
+        "ExportName": "sls-lambda-post-dev-ApiHandlerLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "ServiceEndpoint",

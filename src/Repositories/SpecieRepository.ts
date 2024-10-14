@@ -1,29 +1,22 @@
-import knex from 'knex';
-import config from '../../knexfile';
-import Specie from "../Models/SpecieModel";
-
-const db = knex(config.development);
+import { Specie } from "../Models/db/Species";
+import {Repository} from "typeorm";
+import AppDataSource from "../Config/data-source";
 
 class SpecieRepository {
-    //Inserción de los registros en la DB
-    async createSpecie(specie: Specie): Promise<any> {
-        return db('Species').insert({
-            altura_promedio: specie.altura_promedio,
-            esperanza_vida_promedio: specie.esperanza_vida_promedio,
-            clasificacion: specie.clasificacion,
-            creado: specie.creado,
-            designacion: specie.designacion,
-            editado: specie.editado,
-            colores_ojos: specie.colores_ojos,
-            colores_cabello: specie.colores_cabello,
-            mundo_natal: specie.mundo_natal,
-            idioma: specie.idioma,
-            nombre: specie.nombre,
-            gente: JSON.stringify(specie.gente),
-            peliculas: JSON.stringify(specie.peliculas),
-            colores_piel: specie.colores_piel,
-            url: specie.url
-        });
+    private readonly specieRepository: Repository<Specie>;
+
+    constructor() {
+        this.specieRepository = AppDataSource.getRepository(Specie);
+    }
+
+    async createSpecie(specie: Specie) : Promise<Specie> {
+      try{
+          return await this.specieRepository.save(specie);
+      }
+      catch (error){
+          console.error('Error-createSpecie: ', error);
+          throw new Error('Error insert Specie');
+      }
     }
 }
 

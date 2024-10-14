@@ -1,29 +1,22 @@
-import knex from 'knex';
-import config from '../../knexfile';
-import Vehicle from "../Models/VehicleModel";
-
-const db = knex(config.development);
+import { Vehicle } from "../Models/db/Vehicles";
+import {Repository} from "typeorm";
+import AppDataSource from "../Config/data-source";
 
 class VehicleRepository {
-    async createVehicle(vehicle: Vehicle): Promise<any> {
-        return db('Vehicles').insert({
-            capacidad_carga: vehicle.capacidad_carga,
-            consumibles: vehicle.consumibles,
-            costo_creditos: vehicle.costo_creditos,
-            creado: vehicle.creado,
-            tripulacion: vehicle.tripulacion,
-            editado: vehicle.editado,
-            longitud: vehicle.longitud,
-            fabricante: vehicle.fabricante,
-            velocidad_maxima_atmosferica: vehicle.velocidad_maxima_atmosferica,
-            modelo: vehicle.modelo,
-            nombre: vehicle.nombre,
-            pasajeros: vehicle.pasajeros,
-            pilotos: JSON.stringify(vehicle.pilotos),
-            peliculas: JSON.stringify(vehicle.peliculas),
-            clase_vehiculo: vehicle.clase_vehiculo,
-            url: vehicle.url
-        });
+    private readonly vehicleRepository: Repository<Vehicle>;
+
+    constructor() {
+        this.vehicleRepository = AppDataSource.getRepository(Vehicle);
+    }
+
+    async createVehicle(vehicle: Vehicle) : Promise<Vehicle>    {
+        try {
+            return await this.vehicleRepository.save(vehicle);
+        }
+        catch (error){
+            console.error('Error-createVehicle: ', error);
+            throw new Error('Error insert Specie');
+        }
     }
 }
 

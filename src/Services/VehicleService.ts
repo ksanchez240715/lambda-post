@@ -1,31 +1,12 @@
 import VehicleRepository from '../Repositories/VehicleRepository';
-import Vehicle from '../Models/VehicleModel';
+import { Vehicle } from '../Models/db/Vehicles';
 
-const createVehicle = async (request: any) => {
+const createVehicle = async (request: Vehicle) => {
     try {
-        const newVehicle = new Vehicle(
-            request.capacidad_carga,
-            request.consumibles,
-            request.costo_creditos,
-            request.creado,
-            request.tripulacion,
-            request.editado,
-            request.longitud,
-            request.fabricante,
-            request.velocidad_maxima_atmosferica,
-            request.modelo,
-            request.nombre,
-            request.pasajeros,
-            request.pilotos,
-            request.peliculas,
-            request.clase_vehiculo,
-            request.url,
-        );
-
-        return await VehicleRepository.createVehicle(newVehicle);
+        return await VehicleRepository.createVehicle(request);
     } catch (error) {
         console.error('error: ', error);
-        throw new Error('Error createPerson');
+        throw new Error('Error  insert Vehicle');
     }
 };
 
